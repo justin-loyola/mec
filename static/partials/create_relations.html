@@ -1,0 +1,87 @@
+<div ng-controller="CreateRelationCtrl">
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="messages" class="alert alert-{{alertStatus}}" ng-show="messages">
+                <span ng-bind="messages"></span>
+                <i class="dismiss-messages pull-right glyphicon glyphicon-remove" ng-click="messages = ''"
+                   ng-show="messages"></i>
+            </div>
+            <img class="spinner" src="/img/ajax-loader.gif" ng-show="loading"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Create a relation</h3>
+
+            <form name="relationForm" novalidate role="form">
+                <div class="form-group">
+                    <label for="repUserId">Representative's User ID</label>
+                    <input id="repUserId" type="text" name="repUserId" ng-model="relation.repUserId" 
+                           class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name<span class="required">*</span></label>
+                    <span class="label label-danger"
+                        ng-show="relationForm.name.$error.required">Required!</span>
+                    <input id="name" type="text" name="name" ng-model="relation.name" class="form-control"
+                           ng-required="true"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Contract</label>
+                    <textarea id="description" type="text" name="description" ng-model="relation.contract"
+                              class="form-control"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <input id="startDate" type="text" name="startDate" ng-model="relation.startDate"
+                           class="form-control"/>
+                </div>
+
+                <div class="form-group" ng-controller="DatepickerCtrl">
+                    <label for="endDate">End Date</label>
+                    <p class="input-group">
+                        <input id="endDate" type="text" class="form-control" datepicker-popup="{{format}}"
+                               ng-model="relation.endDate" is-open="opened"
+                               datepicker-options="dateOptions"
+                               close-text="Close"
+                               name="endDate"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="dailyRate">Daily Rate</label>
+                    <!-- The input type is text as the relation.dailyRate will be undefined,
+                    hence isValidDailyRate will be true when input type is number -->
+                    <input id="dailyRate" type="text" name="dailyRate" ng-model="relation.dailyRate"
+                           class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="oneTimeTransaction">One Time Transaction?</label>
+                    <input id="oneTimeTransaction" type="checkbox" name="oneTimeTransaction" 
+                           ng-model="relation.oneTimeTransaction" class="form-control"/>
+                </div>
+
+                <a href="" 
+                   class="btn btn-default btn-lg"
+                   ng-click="createRelation(relationForm)"
+                   ng-disabled="!isValidRelation(relationForm) || loading">Create 1
+                </a>
+
+                <button onclick="window.location.href=''"
+                        class="btn btn-primary"
+                        ng-click="createRelation(relationForm)" 
+                        ng-disabled="!isValidRelation(relationForm) || loading">Create 2
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
